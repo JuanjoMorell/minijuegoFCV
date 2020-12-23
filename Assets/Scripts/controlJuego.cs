@@ -14,7 +14,7 @@ public class controlJuego : MonoBehaviour
 
     Vector3 esquina;
 
-    public List<casilla> casillas = new List<casilla>();
+    public List<GameObject> casillas = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -32,17 +32,48 @@ public class controlJuego : MonoBehaviour
                 miCasilla.GetComponent<casilla>().columna=j;
                 miCasilla.GetComponent<casilla>().posicion = transform.position;
                 miCasilla.GetComponent<casilla>().control = this;
+                casillas.Add(miCasilla);
+                
             }
+        }
+
+        foreach(var item in casillas) {
+            var casillaActual = item.GetComponent<casilla>();
+            casillaActual.getAdyacentes();
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    public void actualizarAdyacentes(List<GameObject> adyacentes) {
+
+        foreach(var item in adyacentes) {
+            var casillaActual = item.GetComponent<casilla>();
+
+            if(casillaActual.estado == 0) {
+                casillaActual.estado = 1;
+                casillaActual.renderer.material = casillaActual.encendida;
+            } else {
+                casillaActual.estado = 0;
+                casillaActual.renderer.material = casillaActual.apagada;
+            }
+        }
     }
 
     void ganar() {
+        var encendidas = 0;
 
+        foreach(var item in casillas) {
+            if (item.GetComponent<casilla>().estado == 1) {
+                encendidas++;
+            } 
+        }
+        if(encendidas == 25) {
+            // El juego acaba
+        }
     }
 }

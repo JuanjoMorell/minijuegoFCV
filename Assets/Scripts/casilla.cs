@@ -5,13 +5,14 @@ using UnityEngine;
 public class casilla : MonoBehaviour
 {
     [SerializeField]
-    Material encendida, apagada, select_en, select_ap;
+    public Material encendida, apagada, select_en, select_ap;
 
-    int estado = 0;
+    public int estado = 0;
 
     public int fila, columna;
     public Vector3 posicion;
-    MeshRenderer renderer;
+    public List<GameObject> casillasAdyacentes;
+    public MeshRenderer renderer;
 
     public controlJuego control;
 
@@ -53,6 +54,23 @@ public class casilla : MonoBehaviour
             renderer.material = encendida;
         }
 
+        // Actualizar adyacentes
+        control.actualizarAdyacentes(casillasAdyacentes);
+    }
+
+    public void getAdyacentes() {
+
+        casillasAdyacentes = new List<GameObject>();
+
         // Obtener casillas de la columna y fila
+        foreach(var item in control.casillas) {
+            var casillaActual = item.GetComponent<casilla>();
+
+            if(casillaActual.fila == fila && casillaActual.columna != columna) {
+                casillasAdyacentes.Add(item);
+            } else if (casillaActual.fila != fila && casillaActual.columna == columna) {
+                casillasAdyacentes.Add(item);
+            }
+        }
     }
 }

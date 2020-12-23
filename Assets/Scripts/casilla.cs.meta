@@ -3,7 +3,12 @@ guid: 623337c4f5bc04047be216a5159b8904
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - encendida: {fileID: 2100000, guid: 792798e998471b04d80c9b3bd0f20cf8, type: 2}
+  - apagada: {fileID: 2100000, guid: 46fdebef7f83a054481099e6455982d8, type: 2}
+  - select_en: {fileID: 2100000, guid: 311861b02ff4bc144b941ae45c279800, type: 2}
+  - select_ap: {fileID: 2100000, guid: 1a254a6a562ce6e48852e4db9d2cc8ee, type: 2}
+  - control: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
