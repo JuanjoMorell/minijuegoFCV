@@ -56,6 +56,7 @@ public class casilla : MonoBehaviour
 
         // Actualizar adyacentes
         control.actualizarAdyacentes(casillasAdyacentes);
+        control.ganar();
     }
 
     public void getAdyacentes() {

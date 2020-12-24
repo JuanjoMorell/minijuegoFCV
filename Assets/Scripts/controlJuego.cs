@@ -14,6 +14,8 @@ public class controlJuego : MonoBehaviour
 
     Vector3 esquina;
 
+    bool randomizado = false;
+
     public List<GameObject> casillas = new List<GameObject>();
 
     // Start is called before the first frame update
@@ -21,7 +23,7 @@ public class controlJuego : MonoBehaviour
     {
         size = 0.15f;
         gap = 1.5f;
-        esquina = centro - 2f*(size+gap)*Vector3.right - 2f*(size+gap)*Vector3.forward;
+        esquina = centro - 2f*(size+gap)*Vector3.right - 2.5f*(size+gap)*Vector3.forward;
 
         for(int i=0; i<5; i++) {
             for(int j=0;j<5; j++) {
@@ -49,6 +51,33 @@ public class controlJuego : MonoBehaviour
 
     }
 
+    public void inicializarTablero() {
+        // Encender una columna y dos filas aleatoriamente
+        if(!randomizado) {
+            randomizado = true;
+
+            int columna = Random.Range(0,4);
+            int fila = Random.Range(0,4);
+            int fila2 = Random.Range(0,4);
+            while(fila == fila2) {
+                fila2 = Random.Range(0,4);
+            }
+
+            foreach(var item in casillas) {
+                var casillaActual = item.GetComponent<casilla>();
+                if(casillaActual.fila == fila || casillaActual.fila == fila2 || casillaActual.columna == columna) {
+                    if(casillaActual.estado == 0) {
+                        casillaActual.estado = 1;
+                        casillaActual.renderer.material = casillaActual.encendida;
+                    } else {
+                        casillaActual.estado = 0;
+                        casillaActual.renderer.material = casillaActual.apagada;
+                    }
+                }
+            }
+        }
+    }
+
     public void actualizarAdyacentes(List<GameObject> adyacentes) {
 
         foreach(var item in adyacentes) {
@@ -64,7 +93,7 @@ public class controlJuego : MonoBehaviour
         }
     }
 
-    void ganar() {
+    public void ganar() {
         var encendidas = 0;
 
         foreach(var item in casillas) {
@@ -74,6 +103,7 @@ public class controlJuego : MonoBehaviour
         }
         if(encendidas == 25) {
             // El juego acaba
+            Debug.Log("Has ganado");
         }
     }
 }
