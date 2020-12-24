@@ -10,6 +10,13 @@ public class controlJuego : MonoBehaviour
     [SerializeField]
     Vector3 centro = Vector3.zero;
 
+    
+    [SerializeField]
+    GameObject escenaGanar;
+
+    [SerializeField]
+    GameObject musicaJuego, musicaGanar;
+
     float size, gap;
 
     Vector3 esquina;
@@ -21,6 +28,7 @@ public class controlJuego : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        escenaGanar.SetActive(false);
         size = 0.15f;
         gap = 1.5f;
         esquina = centro - 2f*(size+gap)*Vector3.right - 2.5f*(size+gap)*Vector3.forward;
@@ -78,6 +86,17 @@ public class controlJuego : MonoBehaviour
         }
     }
 
+    public void restartTablero() {
+        randomizado = false;
+        foreach(var item in casillas) {
+            var casillaActual = item.GetComponent<casilla>();
+            if(casillaActual.estado == 1) {
+                    casillaActual.estado = 0;
+                    casillaActual.renderer.material = casillaActual.apagada;
+            }
+        }
+    }
+
     public void actualizarAdyacentes(List<GameObject> adyacentes) {
 
         foreach(var item in adyacentes) {
@@ -103,7 +122,9 @@ public class controlJuego : MonoBehaviour
         }
         if(encendidas == 25) {
             // El juego acaba
-            Debug.Log("Has ganado");
+            musicaJuego.SetActive(false);
+            musicaGanar.SetActive(true);
+            escenaGanar.SetActive(true);
         }
     }
 }

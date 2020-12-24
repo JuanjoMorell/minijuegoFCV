@@ -8,6 +8,7 @@ public class controlMenu : MonoBehaviour
     [SerializeField]
     GameObject ayuda;
 
+
     int miNivel;
     public void Jugar(int nivel) {
         miNivel = nivel;
@@ -28,6 +29,10 @@ public class controlMenu : MonoBehaviour
 
     void pasar() {
         SceneManager.LoadScene(miNivel);
+    }
+
+    public void menu() {
+        SceneManager.LoadScene(0);
     }
 
     void teminar() {
